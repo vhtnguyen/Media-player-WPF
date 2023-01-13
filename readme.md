@@ -62,6 +62,6 @@ Run file `MediaPlayer.exe` in folder `release` to start the application.
 
 ### Some screenshoots
 
-![Giao diện của ứng dụng](https://i.postimg.cc/6q7t1BYn/Screenshot-2023-01-14-014833.png)
+![Giao diện của ứng dụng](https://i.postimg.cc/GtQ3yX7S/Screenshot-2023-01-14-014833.png)
 
 ![Play queue](https://i.postimg.cc/4x4r2LY1/Screenshot-2023-01-14-011035.png)
