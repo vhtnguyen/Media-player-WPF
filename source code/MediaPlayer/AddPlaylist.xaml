@@ -1,0 +1,15 @@
+﻿<Window x:Class="MediaPlayer.AddPlaylist"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MediaPlayer"
+        mc:Ignorable="d"
+        Title="AddPlaylist" Height="200" Width="300">
+    <Canvas>
+        <Label Content="Playlist name:" Canvas.Left="15" Canvas.Top="42"/>
+        <TextBox x:Name="nameTextBox" Width="180" Height="30" Padding="5" Canvas.Left="90" Canvas.Top="42" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="okButton" Width="60" Height="30" IsDefault="True" Content="OK" Click="okButton_Click" Canvas.Left="80" Canvas.Top="100"/>
+        <Button x:Name="cancelButton" Width="60" Height="30" IsCancel="True" Content="Cancel" Click="cancelButton_Click" Canvas.Left="170" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </Canvas>
+</Window>

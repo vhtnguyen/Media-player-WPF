@@ -1,0 +1,750 @@
+﻿<Window x:Class="MediaPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MediaPlayer"
+        mc:Ignorable="d"
+        Title="Media Player"
+        Height="583"
+        Width="1000"
+        Loaded="MainWindow_Loaded"
+        Closing="MainWindow_CLosing">
+    <Border BorderBrush="Black"
+            BorderThickness="0.5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black"
+                    BorderThickness="0,0,0.5,0">
+                <DockPanel DockPanel.Dock="Left"
+                           Margin="3"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           Panel.ZIndex="1"
+                           Grid.Column="0"
+                           Grid.Row="0">
+                    <Button DockPanel.Dock="Top"
+                            x:Name="homeButton"
+                            Click="home_click"
+                            Width="150"
+                            Height="35"
+                            Padding="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal"
+                                    Width="130">
+                            <Image Width="16"
+                                   Height="15"
+                                   Stretch="Fill"
+                                   Margin="3"
+                                   Name="homeButtonIcon"
+                                   Source="/img/home.png" />
+                            <TextBlock Name="homeButtonName"
+                                       Text="Home"
+                                       Margin="10,3,3,3"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                    </Button>
+                    <Button DockPanel.Dock="Top"
+                            x:Name="playqueueButton"
+                            Click="playqueue_click"
+                            Width="150"
+                            Height="35"
+                            Padding="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal"
+                                    Width="130">
+                            <Image Width="16"
+                                   Height="15"
+                                   Stretch="Fill"
+                                   Margin="3"
+                                   Name="playqueueButtonIcon"
+                                   Source="/img/queue.png" />
+                            <TextBlock Name="playqueueButtonName"
+                                       Text="Play queue"
+                                       Margin="10,3,3,3" />
+                        </StackPanel>
+                    </Button>
+                    <Button DockPanel.Dock="Top"
+                            x:Name="playlistButton"
+                            Click="playlist_click"
+                            Width="150"
+                            Height="35"
+                            Padding="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal"
+                                    Width="130">
+                            <Image Width="16"
+                                   Height="15"
+                                   Stretch="Fill"
+                                   Margin="3"
+                                   Name="playlistButtonIcon"
+                                   Source="/img/list.png" />
+                            <TextBlock Name="playlistButtonName"
+                                       Text="Playlist"
+                                       Margin="10,3,3,3" />
+                        </StackPanel>
+                    </Button>
+
+                </DockPanel>
+            </Border>
+
+            <DockPanel Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch">
+
+                <StackPanel Name="HomePage"
+                            Visibility="Visible"
+                            Margin="20">
+                    <TextBlock Text="Home"
+                               Margin="10"
+                               FontWeight="ExtraBold"
+                               FontSize="20" />
+                    <StackPanel>
+                        <StackPanel  Name="panel_nowplaying"
+                                    Visibility="Collapsed">
+                            <WrapPanel Background="Transparent"
+                                       Margin="10,10,10,5">
+                                <TextBlock Text="Now Playing"
+                                           FontWeight="ExtraBold"
+                                           FontSize="15"></TextBlock>
+                                <Button BorderBrush="Transparent"
+                                        Click="playing_click"
+                                        Background="Transparent">
+                                    <Image Width="16"
+                                           Height="15"
+                                           Stretch="Fill"
+                                           Margin="3"
+                                           Source="/img/continue.png" />
+                                </Button>
+                            </WrapPanel>
+                            <WrapPanel  Margin="25,0,5,5">
+                                <TextBlock Text="Track: "
+                                           d:Text="playlist"
+                                           Padding="3"
+                                           FontSize="10"></TextBlock>
+                                <TextBlock Text="{Binding VideoName}"
+                                           Margin="5,0,5,5"
+                                           d:Text="video 123"
+                                           Padding="3"
+                                           FontStyle="Italic"
+                                           FontSize="10"></TextBlock>
+                            </WrapPanel>
+                        </StackPanel>
+                        <WrapPanel Background="Transparent"
+                                   Margin="10,10,10,5">
+                            <TextBlock Text="Recent Play"
+                                       FontWeight="ExtraBold"
+                                       FontSize="15"></TextBlock>
+                            <Button BorderBrush="Transparent"
+                                    Click="recentplay_click"
+                                    Background="Transparent">
+                                <Image Width="16"
+                                       Height="15"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Source="/img/continue.png" />
+                            </Button>
+                        </WrapPanel>
+
+                        <ListView Height="280"
+                                  VerticalAlignment="Top"
+                                  HorizontalAlignment="Center"
+                                  Name="listrecentplay"
+                                  Margin="10,5,0,0"
+                                  BorderBrush="Transparent"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  SelectionMode="Extended">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Focusable"
+                                            Value="false" />
+                                    <Setter Property="IsHitTestVisible"
+                                            Value="False" />
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                </Style>
+
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                Height="20"
+                                                MinWidth="600">
+                                        <WrapPanel VerticalAlignment="Center">
+                                            <Image Width="10"
+                                                   Height="10"
+                                                   Stretch="Fill"
+                                                   Margin="3"
+                                                   Source="/img/videolist.png" />
+                                            <TextBlock Text="{Binding VideoName}"
+                                                       FontSize="13"
+                                                       Margin="10,0,0,0"
+                                                       FontStyle="Normal"></TextBlock>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Name="PlaylistPage"
+                            Visibility="Collapsed">
+                    <TextBlock Text="Playlist"
+                               Margin="10"
+                               FontWeight="ExtraBold"
+                               FontSize="20" />
+                    <WrapPanel  Margin="20,5,0,0">
+                        <Button x:Name="addplaylistButton"
+                                Click="addPlaylist_click"
+                                Height="33"
+                                Padding="3"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="2"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Name="addplaylistButtonIcon"
+                                       Source="/img/add.png" />
+                                <TextBlock Name="addplaylistButtonName"
+                                           Text="New Playlist"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                        <Button Name="viewPlaylist"
+                                Click="viewPlaylist_click"
+                                Height="33"
+                                Margin="15,0,0,0"
+                                Padding="3"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="2"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Source="/img/continue.png" />
+                                <TextBlock Text="View Playlist"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                    </WrapPanel>
+
+                    <ListView Width="500"
+                              Height="300"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Center"
+                              Name="listPlaylist"
+                              Margin="20,10,0,0"
+                              BorderBrush="Transparent"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="listViewContextMenu">
+                                <MenuItem Header="Delete"
+                                          Click="deleteMenuItem_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="/img/remove.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="ContextMenu"
+                                        Value="{StaticResource listViewContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Height="30"
+                                            Width="450">
+                                    <WrapPanel VerticalAlignment="Center">
+                                        <Image Width="14"
+                                               Height="14"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Source="/img/playlist.png" />
+                                        <TextBlock Text="{Binding PlaylistName}"
+                                                   FontSize="15"
+                                                   Margin="10,0,0,0"
+                                                   FontStyle="Normal"></TextBlock>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackPanel>
+                <StackPanel Name="PlaylistInforPage"
+                            Visibility="Collapsed">
+                    <WrapPanel>
+                        <TextBlock Text="Playlist: "
+                                   Margin="10,10,0,10"
+                                   FontWeight="ExtraBold"
+                                   FontSize="15" />
+                        <TextBlock d:Text="Playlist"
+                                   Text="{Binding PlaylistName}"
+                                   Margin="5,10,0,10"
+                                   FontWeight="Bold"
+                                   FontStyle="Italic"
+                                   FontSize="15"
+                                   Foreground="ForestGreen" />
+                    </WrapPanel>
+                    <WrapPanel Margin="20,5,0,5">
+                        <Button x:Name="playListButton"
+                                Click="playPlaylist_click"
+                                Width="70"
+                                Height="33"
+                                Padding="3"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Name="playListButtonIcon"
+                                       Source="/img/play.png" />
+                                <TextBlock Name="playButtonName"
+                                           Text="Play"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="addsongButton"
+                                Click="addSong_click"
+                                Width="70"
+                                Height="33"
+                                Padding="3"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Name="addsongButtonIcon"
+                                       Source="/img/add.png" />
+                                <TextBlock Name="addsongButtonName"
+                                           Text="Add to"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="deleteButton"
+                                Click="deletePlaylist_click"
+                                Width="70"
+                                Height="33"
+                                Padding="3"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Name="deleteButtonIcon"
+                                       Source="/img/remove.png" />
+                                <TextBlock Name="deleteButtonName"
+                                           Text="Delete"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="saveplaylistButton"
+                                Click="savePlaylist_click"
+                                Width="70"
+                                Height="33"
+                                Padding="3"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Left"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                BorderBrush="ForestGreen">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="14"
+                                       Height="14"
+                                       Stretch="Fill"
+                                       Margin="3"
+                                       Name="saveplaylistButtonIcon"
+                                       Source="/img/save.png" />
+                                <TextBlock Name="saveplaylisteButtonName"
+                                           Text="Save"
+                                           Margin="3" />
+                            </StackPanel>
+                        </Button>
+                    </WrapPanel>
+                    <ListView Width="500"
+                              Height="300"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Center"
+                              Name="listVideo"
+                              Margin="10,10,0,0"
+                              BorderBrush="Transparent"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="listViewContextMenu">
+                                <MenuItem Header="Remove"
+                                          Click="deleteVideo_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="/img/remove.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="ContextMenu"
+                                        Value="{StaticResource listViewContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Height="20"
+                                            Width="450">
+                                    <WrapPanel VerticalAlignment="Center">
+                                        <Image Width="10"
+                                               Height="10"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Source="/img/videolist.png" />
+                                        <TextBlock Text="{Binding VideoName}"
+                                                   FontSize="13"
+                                                   Margin="10,0,0,0"
+                                                   FontStyle="Normal"></TextBlock>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+                <DockPanel Name="PlayqueuePage"
+                           Visibility="Collapsed"
+                           Margin="5,10,20,10">
+
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="Play Queue"
+                               FontWeight="ExtraBold"
+                               FontSize="20"
+                               Margin="15,0,0,0" />
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Top"
+                                Margin="15,0,0,10"
+                                Name="queueHeader">
+                        <TextBlock Text="Playing: "
+                                   Name="videoStatus"
+                                   Margin="0,5,0,0"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="ForestGreen"></TextBlock>
+                        <TextBlock x:Name="videoname"
+                                   Text="No track selected"
+                                   d:Text="{Binding }"
+                                   Margin="5,5,10,0"
+                                   FontSize="12"
+                                   FontStyle="Italic"></TextBlock>
+                    </StackPanel>
+                    <DockPanel>
+                        <Border DockPanel.Dock="Right"
+                                BorderBrush="Black"
+                                BorderThickness="0.5"
+                                Padding="10,5,10,5">
+                            <DockPanel  Width="200"
+                                        Name="queueList">
+
+                                <StackPanel Orientation="Horizontal"
+                                            DockPanel.Dock="Top"
+                                            Margin="10,0,0,0">
+
+                                    <TextBlock Text="Playlist "
+                                               FontWeight="Normal"
+                                               FontStyle="Italic"
+                                               FontSize="14" />
+                                    <TextBlock TextWrapping="Wrap"
+                                               d:Text="Current empty"
+                                               Text="{Binding PlaylistName}"
+                                               FontWeight="Bold"
+                                               FontStyle="Italic"
+                                               FontSize="14"
+                                               Foreground="CornflowerBlue" />
+
+                                </StackPanel>
+                                <Border DockPanel.Dock="Top"
+                                        BorderBrush="Black"
+                                        BorderThickness="0.5"
+                                        Margin="0,5,0,0"></Border>
+
+
+                                <ListView MaxHeight="1000"
+                                          DockPanel.Dock="Top"
+                                          HorizontalAlignment="Right"
+                                          Name="listPlayqueue"
+                                          Margin="0,5,0,0"
+                                          BorderBrush="Transparent"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          VerticalContentAlignment="Top"
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                          SelectionMode="Extended">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable"
+                                                    Value="false" />
+                                            <Setter Property="IsHitTestVisible"
+                                                    Value="False" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
+                                                        Height="20">
+                                                <WrapPanel VerticalAlignment="Center">
+                                                    <Image Width="10"
+                                                           Height="10"
+                                                           Stretch="Fill"
+                                                           Margin="3"
+                                                           Source="/img/videolist.png"
+                                                           Visibility="{Binding displayMode}"
+                                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                                                    <TextBlock  Width="180"
+                                                                TextTrimming="WordEllipsis"
+                                                                Text="{Binding VideoName}"
+                                                                FontSize="13"
+                                                                Margin="10,0,0,0"
+                                                                FontStyle="Normal"></TextBlock>
+                                                </WrapPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                            </DockPanel>
+                        </Border>
+                        <StackPanel DockPanel.Dock="Left"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <MediaElement Visibility="Collapsed"
+                                          DockPanel.Dock="Top"
+                                          MediaOpened="player_MediaOpened"
+                                          MediaEnded="player_MediaEnded"
+                                          LoadedBehavior="Manual"
+                                          Name="videoplayer"
+                                          Width="500"
+                                          Height="360" />
+                            <Image Visibility="Visible"
+                                   Height="100"
+                                   Margin="3"
+                                   Source="/img/music.png"
+                                   Name="mp3bg"></Image>
+                        </StackPanel>
+                    </DockPanel>
+                </DockPanel>
+            </DockPanel>
+            <Border BorderBrush="Black"
+                    BorderThickness="0,0.5,0,0"
+                    Margin="0,0,0,10"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1">
+                <StackPanel Canvas.Bottom="0"
+                            Panel.ZIndex="2"
+                            VerticalAlignment="Center">
+
+                    <WrapPanel VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="0">
+
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <StackPanel DockPanel.Dock="Bottom"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <Button x:Name="prevButton"
+                                        Click="videoprev_click"
+                                        Height="30"
+                                        Padding="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="Transparent">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16"
+                                               Height="15"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Name="prevButtonIcon"
+                                               Source="/img/previous.png" />
+                                        <TextBlock Text="Previous"
+                                                   Name="prevButtonText"
+                                                   Margin="3"
+                                                   Foreground="MediumSeaGreen"
+                                                   FontWeight="Black" />
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="shufButton"
+                                        Click="videoshuffle_click"
+                                        Height="30"
+                                        Padding="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="Transparent"
+                                        Margin="20,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16"
+                                               Height="15"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Name="shufButtonIcon"
+                                               Source="/img/shuffle.png" />
+                                        <TextBlock Text="Shuffle: Off"
+                                                   Name="shufButtonText"
+                                                   Margin="3"
+                                                   Foreground="Crimson"
+                                                   FontWeight="Black" />
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="playvideoButton"
+                                        Click="videoplay_click"
+                                        Height="30"
+                                        Width="70"
+                                        Padding="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="Transparent"
+                                        Margin="20,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16"
+                                               Height="15"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Name="playvideoButtonIcon"
+                                               Source="/img/pause.png" />
+                                        <TextBlock Text="Pause"
+                                                   Name="playvideoButtonText"
+                                                   Margin="3"
+                                                   Foreground="CornflowerBlue"
+                                                   FontWeight="Black" />
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="pauseButton"
+                                        Click="videostop_click"
+                                        Height="30"
+                                        Width="70"
+                                        Padding="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="Transparent"
+                                        Margin="20,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16"
+                                               Height="15"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Name="stopButtonIcon"
+                                               Source="/img/stop.png" />
+                                        <TextBlock Text="Stop"
+                                                   Margin="3"
+                                                   Foreground="OrangeRed"
+                                                   FontWeight="Black" />
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="nextButton"
+                                        Click="videonext_click"
+                                        Height="30"
+                                        Width="70"
+                                        Padding="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="Transparent"
+                                        Margin="20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16"
+                                               Height="15"
+                                               Stretch="Fill"
+                                               Margin="3"
+                                               Name="nextButtonIcon"
+                                               Source="/img/next.png" />
+                                        <TextBlock Text="Next"
+                                                   Margin="3"
+                                                   Foreground="MediumSeaGreen"
+                                                   FontWeight="Black" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="10,5" MinWidth="300">
+                                <TextBlock x:Name="currentPosition"
+                                           Text="0:00"
+                                           d:Text="1:23" />
+                                <Slider x:Name="progressSlider"
+                                        ValueChanged="progressSlider_ValueChanged"
+                                        IsMoveToPointEnabled="True"
+                                        Width="200"
+                                        Height="20"
+                                        Margin="10,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                <TextBlock x:Name="totalPosition"
+                                           d:Text="3:04"
+                                           Text="0:00" />
+                            </StackPanel>
+
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
