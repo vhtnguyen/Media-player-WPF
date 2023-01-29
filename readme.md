@@ -4,14 +4,6 @@
 
 *An application to play media files locally supports popular audio and video formats like mp4, m4a, mp3, wav...*
 
-### Team Infomation
-
-   | Student ID |Full name |
-   |---|---|
-   | 20120519|Nguyễn Thị Thúy Liễu |
-   |20120540|Võ Hoàng Thảo Nguyên|
-   |20120553|Đỗ Minh Quân|
-
 ### Usage
 
 Run file `MediaPlayer.exe` in folder `release` to start the application.
@@ -52,13 +44,6 @@ Run file `MediaPlayer.exe` in folder `release` to start the application.
       |  Next | Ctrl+Alt+N |
       | Previous | Ctrl+Alt+P |
 
-##### Moreover
-
-   *Friendly UI with responesive.*
-
-## Expected Grade : 10
-
-   *For total more than 72 hours working hard.* 😊
 
 ### Some screenshoots
 
