@@ -2,7 +2,7 @@
 
 # Project 2: Media Player
 
-*An application to play media files locally supports popular audio and video formats like mp4, m4a, mp3, wav...*
+*An simple Windows Desktop `.NET` app in `C#` using `WPF` UI framework to play media files locally supports popular audio and video formats like mp4, m4a, mp3, wav...*
 
 ### Usage
 
